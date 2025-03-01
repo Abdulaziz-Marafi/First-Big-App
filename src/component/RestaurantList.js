@@ -2,22 +2,28 @@ import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import RestaurantCard from "./RestaurantCard.js";
 import restaurants from "../data/restaurants";
+import { getAllRestaurants } from "../api/food.js";
+import { useQuery } from "@tanstack/react-query";
 
 const RestaurantList = ({ selectedCategory }) => {
+  const { data: restaurants } = useQuery({
+    queryKey: ["getRestaurants"],
+    queryFn: () => getAllRestaurants(),
+  });
   const filteredRestaurants = selectedCategory
     ? restaurants.filter(
         (restaurant) => restaurant.category === selectedCategory
       )
     : restaurants;
 
-  const restaurantList = filteredRestaurants.map((restaurant) => (
+  const restaurantList = restaurants?.map((restaurant) => (
     <RestaurantCard
-      key={restaurant.id}
+      key={restaurant._id}
       name={restaurant.name}
       image={restaurant.image}
       rating={restaurant.rating}
       deliveryTime={restaurant.deliveryTime}
-      id={restaurant.id}
+      id={restaurant._id}
     />
   ));
   return (

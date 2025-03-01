@@ -6,20 +6,23 @@ import {
   View,
 } from "react-native";
 import React from "react";
+import { getAllCategories } from "../api/food.js";
 import FoodCategory from "./FoodCategory";
 import restaurantCategories from "../data/restaurantCategories.js";
+import { useQuery } from "@tanstack/react-query";
 
 const FoodCategoryList = () => {
-  const restaurantView = restaurantCategories.map((category) => {
+  const { data: categories } = useQuery({
+    queryKey: ["getCategories"],
+    queryFn: () => getAllCategories(),
+  });
+  const restaurantView = categories?.map((category) => {
     return (
       <TouchableOpacity
-        key={category.id}
+        key={category._id}
         onPress={() => onCategorySelect(category.categoryName)}
       >
-        <FoodCategory
-          image={category.categoryImage}
-          name={category.categoryName}
-        />
+        <FoodCategory image={category.image} name={category.name} />
       </TouchableOpacity>
     );
   });

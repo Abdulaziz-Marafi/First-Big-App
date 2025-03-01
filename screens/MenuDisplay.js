@@ -3,16 +3,21 @@ import React from "react";
 import restaurants from "../src/data/restaurants";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MenuItem from "../src/component/MenuItem";
-import { useRoute } from "@react-navigation/native";
-const navigation = useNavigation();
+import { useQuery } from "@tanstack/react-query";
+import { getRestaurantById } from "../src/api/food";
 
 const MenuDisplay = ({ route }) => {
   const { id } = route.params;
-  const selectedRes = restaurants.find((res) => res.id === id);
-  const menuItems = selectedRes.menuItems.map((item) => {
+  console.log("ID is:" + id);
+  //const selectedRes = restaurants.find((res) => res.id === id);
+  const { data: restaurant, isLoading } = useQuery({
+    queryKey: ["getRestaurantById", id],
+    queryFn: () => getRestaurantById(id),
+  });
+  const menuItems = restaurant?.items?.map((item) => {
     return (
       <MenuItem
-        key={item.id}
+        key={item._id}
         image={item.image}
         price={item.price}
         name={item.name}
@@ -32,15 +37,15 @@ const MenuDisplay = ({ route }) => {
       >
         <Image
           source={{
-            uri: selectedRes.image,
+            uri: restaurant?.image,
           }}
           style={styles.menuDisplayImage}
         />
         <View style={styles.infoContainer}>
           <View style={styles.textRow}>
-            <Text style={styles.menuText}>{selectedRes.name}</Text>
+            <Text style={styles.menuText}>{restaurant?.name}</Text>
             <Text style={styles.menuText}>
-              {selectedRes.rating}{" "}
+              {restaurant?.rating}{" "}
               <AntDesign name="star" size={18} color="yellow" />
             </Text>
           </View>
@@ -48,7 +53,7 @@ const MenuDisplay = ({ route }) => {
           <View style={styles.textRow}>
             <Text style={styles.menuText2}>
               <AntDesign name="clockcircle" size={24} color="#FF9D23" />{" "}
-              {selectedRes.deliveryTime}
+              {restaurant?.deliveryTime}
             </Text>
           </View>
         </View>
