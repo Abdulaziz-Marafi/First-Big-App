@@ -1,6 +1,5 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import restaurants from "../data/restaurants.js";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { useNavigation } from "@react-navigation/native";
 const RestaurantCard = ({ name, image, rating, deliveryTime, id }) => {

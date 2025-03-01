@@ -1,7 +1,6 @@
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
 import RestaurantCard from "./RestaurantCard.js";
-import restaurants from "../data/restaurants";
 import { getAllRestaurants } from "../api/food.js";
 import { useQuery } from "@tanstack/react-query";
 
@@ -10,13 +9,14 @@ const RestaurantList = ({ selectedCategory }) => {
     queryKey: ["getRestaurants"],
     queryFn: () => getAllRestaurants(),
   });
+
   const filteredRestaurants = selectedCategory
-    ? restaurants.filter(
+    ? restaurants?.filter(
         (restaurant) => restaurant.category === selectedCategory
       )
     : restaurants;
 
-  const restaurantList = restaurants?.map((restaurant) => (
+  const restaurantList = filteredRestaurants?.map((restaurant) => (
     <RestaurantCard
       key={restaurant._id}
       name={restaurant.name}
@@ -26,6 +26,7 @@ const RestaurantList = ({ selectedCategory }) => {
       id={restaurant._id}
     />
   ));
+
   return (
     <ScrollView
       style={{

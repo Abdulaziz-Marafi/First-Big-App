@@ -12,7 +12,10 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <FoodCategoryList onCategorySelect={handleCategorySelect} />
+      <FoodCategoryList
+        onCategorySelect={handleCategorySelect}
+        selectedCategory={selectedCategory}
+      />
       <RestaurantList selectedCategory={selectedCategory} />
     </View>
   );

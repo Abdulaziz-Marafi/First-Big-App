@@ -1,6 +1,5 @@
 import { Image, ScrollView, StyleSheet, Text, View } from "react-native";
 import React from "react";
-import restaurants from "../src/data/restaurants";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MenuItem from "../src/component/MenuItem";
 import { useQuery } from "@tanstack/react-query";

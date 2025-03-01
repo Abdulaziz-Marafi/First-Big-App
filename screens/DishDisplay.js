@@ -1,7 +1,6 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import restaurants from "../src/data/restaurants";
 
 const DishDisplay = ({ route }) => {
   const { dish } = route.params;

@@ -8,24 +8,38 @@ import {
 import React from "react";
 import { getAllCategories } from "../api/food.js";
 import FoodCategory from "./FoodCategory";
-import restaurantCategories from "../data/restaurantCategories.js";
 import { useQuery } from "@tanstack/react-query";
 
-const FoodCategoryList = () => {
+const FoodCategoryList = ({ onCategorySelect, selectedCategory }) => {
   const { data: categories } = useQuery({
     queryKey: ["getCategories"],
     queryFn: () => getAllCategories(),
   });
+
+  const handleCategoryPress = (categoryName) => {
+    if (selectedCategory === categoryName) {
+      onCategorySelect(null); // Deselect category
+    } else {
+      onCategorySelect(categoryName); // Select category
+    }
+  };
+
   const restaurantView = categories?.map((category) => {
+    const isSelected = selectedCategory === category.categoryName;
     return (
       <TouchableOpacity
         key={category._id}
-        onPress={() => onCategorySelect(category.categoryName)}
+        onPress={() => handleCategoryPress(category.categoryName)}
       >
-        <FoodCategory image={category.image} name={category.name} />
+        <FoodCategory
+          image={category.image}
+          name={category.name}
+          isSelected={isSelected}
+        />
       </TouchableOpacity>
     );
   });
+
   return (
     <ScrollView
       horizontal={true}
