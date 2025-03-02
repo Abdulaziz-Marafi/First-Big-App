@@ -1,9 +1,10 @@
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { register } from "../../src/api/auth";
 import * as ImagePicker from "expo-image-picker";
+import UserContext from "../../src/context/UserContext";
 import {
   Image,
   StyleSheet,
@@ -16,12 +17,14 @@ import {
 const Register = () => {
   const [userInfo, setUserInfo] = useState({});
   const [image, setImage] = useState("");
+  const { isAuthenticated, setIsAuthenticated } = useContext(UserContext);
 
   const { mutate } = useMutation({
     mutationKey: ["register"],
     mutationFn: () => register(userInfo, image),
     onSuccess: () => {
       alert("Registration successful");
+      setIsAuthenticated(true);
     },
     onError: (error) => {
       alert("Registration failed");
@@ -56,7 +59,7 @@ const Register = () => {
         placeholder="Email"
         placeholderTextColor="#C14600"
         onChangeText={(value) => {
-          setUserInfo({ ...userInfo, email: value });
+          setUserInfo({ ...userInfo, username: value });
         }}
       />
       <TextInput

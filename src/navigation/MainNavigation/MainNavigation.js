@@ -1,14 +1,18 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import HomeNavigation from "../HomeNavigation/HomeNavigation";
 import AuthNav from "../AuthNavigation/AuthNav";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
+import ProfileNavigation from "../ProfileNavigation/ProfileNavigation";
+import UserContext from "../../context/UserContext";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const Tab = createBottomTabNavigator();
 
 const MainNavigation = () => {
+  const { isAuthenticated, setIsAuthenticated } = useContext(UserContext);
   return (
     <Tab.Navigator
       screenOptions={{
@@ -31,7 +35,7 @@ const MainNavigation = () => {
           tabBarLabel: "Home",
         }}
       />
-      <Tab.Screen
+      {/* <Tab.Screen
         name="AuthNav"
         component={AuthNav}
         options={{
@@ -39,6 +43,17 @@ const MainNavigation = () => {
             <MaterialCommunityIcons name="account" size={size} color={color} />
           ),
           tabBarLabel: "Login",
+        }}
+      /> */}
+
+      <Tab.Screen
+        name="ProfileNavigation"
+        component={ProfileNavigation}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" size={size} color={color} />
+          ),
+          tabBarLabel: "Profile",
         }}
       />
     </Tab.Navigator>

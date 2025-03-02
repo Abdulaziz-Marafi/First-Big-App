@@ -1,19 +1,28 @@
 import { SafeAreaView, StyleSheet, Text, View } from "react-native";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MainNavigation from "./src/navigation/MainNavigation/MainNavigation";
+import UserContext from "./src/context/UserContext";
+import AuthNav from "./src/navigation/AuthNavigation/AuthNav";
+import { getToken } from "./src/api/storage";
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const queryClient = new QueryClient();
-  // const foodTypes = restaurantCategories.map((category) => {
-  //   <FoodCategory
-  //     image={category.categoryImage}
-  //     name={category.categoryName}
-  //   />;
-  // });
+
+  const checkToken = async () => {
+    // get the token
+    const token = await getToken();
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  };
+  useEffect(() => {
+    checkToken();
+  });
+
   return (
     <View style={styles.container}>
       <SafeAreaView
@@ -23,8 +32,13 @@ export default function App() {
       >
         <NavigationContainer>
           <QueryClientProvider client={queryClient}>
-            <MainNavigation />
-            {/* <AuthNav /> */}
+            <UserContext.Provider
+              value={{ isAuthenticated, setIsAuthenticated }}
+            >
+              {/* <MainNavigation /> */}
+              {isAuthenticated ? <MainNavigation /> : <AuthNav />}
+              {/* <AuthNav /> */}
+            </UserContext.Provider>
           </QueryClientProvider>
         </NavigationContainer>
       </SafeAreaView>

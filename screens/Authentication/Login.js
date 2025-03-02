@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,14 +9,17 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../src/api/auth";
+import UserContext from "../../src/context/UserContext";
 
 const Login = () => {
   const [userInfo, setUserInfo] = useState({});
+  const { isAuthenticated, setIsAuthenticated } = useContext(UserContext);
   const { mutate } = useMutation({
     mutationKey: ["login"],
     mutationFn: () => login(userInfo),
     onSuccess: () => {
       alert("Login successful");
+      setIsAuthenticated(true);
     },
     onError: (error) => {
       alert("Login failed");
@@ -38,7 +41,7 @@ const Login = () => {
         placeholder="Email"
         placeholderTextColor="#C14600"
         onChangeText={(value) => {
-          setUserInfo({ ...userInfo, email: value });
+          setUserInfo({ ...userInfo, username: value });
         }}
       />
       <TextInput

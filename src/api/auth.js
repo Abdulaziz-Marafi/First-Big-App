@@ -12,22 +12,27 @@ const register = async (userInfo, image) => {
     type: "image/jpeg",
     uri: image,
   });
-  const res = await instance.post("/auth/register", formData);
+  const response = await instance.post("/auth/register", formData);
 
-  console.log(res);
+  console.log(response);
 
-  setToken(res.data.token);
+  setToken(response.data.token);
 
-  return res.data;
+  return response.data;
 };
 
 const login = async (userInfo) => {
   const response = await instance.post("auth/login", {
     ...userInfo,
   });
-  setToken(res.data.token);
+  setToken(response.data.token);
 
   return response.data;
 };
 
-export { register, login };
+const getProfile = async () => {
+  const response = await instance.get("/auth/profile");
+  return response.data;
+};
+
+export { register, login, getProfile };
