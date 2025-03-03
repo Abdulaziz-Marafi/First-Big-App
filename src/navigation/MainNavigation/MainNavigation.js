@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from "react-native";
 import React, { useContext } from "react";
 import HomeNavigation from "../HomeNavigation/HomeNavigation";
 import AuthNav from "../AuthNavigation/AuthNav";
+import CartNavigation from "../CartNavigation/CartNavigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import MaterialCommunityIcons from "@expo/vector-icons/MaterialCommunityIcons";
@@ -45,7 +46,16 @@ const MainNavigation = () => {
           tabBarLabel: "Login",
         }}
       /> */}
-
+      <Tab.Screen
+        name="CartNav"
+        component={CartNavigation}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="shoppingcart" size={size} color={color} />
+          ),
+          tabBarLabel: "Cart",
+        }}
+      />
       <Tab.Screen
         name="ProfileNavigation"
         component={ProfileNavigation}

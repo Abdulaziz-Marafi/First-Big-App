@@ -1,9 +1,11 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigation } from "@react-navigation/native";
+import CartContext from "../context/CartContext";
 
 const MenuItem = ({ name, price, image, dish }) => {
   const navigation = useNavigation();
+  const { addToCart } = useContext(CartContext);
 
   return (
     <TouchableOpacity
@@ -22,6 +24,12 @@ const MenuItem = ({ name, price, image, dish }) => {
         <Text style={styles.menuItemText}>{name}</Text>
         <Text style={styles.menuItemPrice}>{price} $</Text>
       </View>
+      <TouchableOpacity
+        style={styles.addToCartButton}
+        onPress={() => addToCart(dish)}
+      >
+        <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 };
@@ -66,5 +74,17 @@ const styles = StyleSheet.create({
     color: "#FF9D23",
     fontSize: 16,
     fontWeight: "300",
+  },
+  addToCartButton: {
+    backgroundColor: "#FF9D23",
+    borderRadius: 10,
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    alignItems: "center",
+  },
+  addToCartButtonText: {
+    color: "#FFF",
+    fontSize: 14,
+    fontWeight: "bold",
   },
 });

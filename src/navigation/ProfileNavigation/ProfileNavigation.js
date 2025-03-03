@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { deleteToken } from "../../api/storage";
 import UserContext from "../../context/UserContext";
+
 const Stack = createNativeStackNavigator();
 
 const ProfileNavigation = () => {

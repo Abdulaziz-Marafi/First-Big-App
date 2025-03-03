@@ -37,7 +37,7 @@ const RestaurantList = ({ selectedCategory }) => {
       contentContainerStyle={{
         alignItems: "center",
         justifyContent: "center",
-        paddingBlockEnd: 10,
+        paddingBlockEnd: 80,
       }}
     >
       {restaurantList}

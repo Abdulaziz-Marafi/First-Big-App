@@ -21,7 +21,7 @@ const Profile = () => {
     queryFn: () => getProfile(),
   });
   console.log(data);
-  const imageUrl = `https://react-native-food-delivery-be.eapi.joincoded.com/${data.image}`;
+  const imageUrl = `https://react-native-food-delivery-be.eapi.joincoded.com/${data?.image}`;
 
   return (
     <View style={styles.container}>
@@ -29,7 +29,7 @@ const Profile = () => {
         source={{ uri: imageUrl }} // Replace with actual user image
         style={styles.profileImage}
       />
-      <Text style={styles.username}>{data.username}</Text>
+      <Text style={styles.username}>{data?.username}</Text>
       {/* Replace with actual username */}
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
         <Text style={styles.logoutButtonText}>Logout</Text>

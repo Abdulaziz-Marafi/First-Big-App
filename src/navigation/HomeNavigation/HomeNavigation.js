@@ -14,13 +14,25 @@ const HomeNavigation = () => {
         headerShadowVisible: false,
         headerShown: true,
         tabBarStyle: {
-          backgroundColor: "#FF9D23",
+          backgroundColor: "#000",
         },
       }}
     >
       <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="MenuDisplay" component={MenuDisplay} />
-      <Stack.Screen name="DishDisplay" component={DishDisplay} />
+      <Stack.Screen
+        name="MenuDisplay"
+        component={MenuDisplay}
+        options={{
+          title: "Menu",
+        }}
+      />
+      <Stack.Screen
+        name="DishDisplay"
+        component={DishDisplay}
+        options={{
+          title: "Dish",
+        }}
+      />
     </Stack.Navigator>
   );
 };

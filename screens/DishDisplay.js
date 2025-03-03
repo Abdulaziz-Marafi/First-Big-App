@@ -1,9 +1,11 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useContext } from "react";
 import AntDesign from "@expo/vector-icons/AntDesign";
+import CartContext from "../src/context/CartContext";
 
 const DishDisplay = ({ route }) => {
   const { dish } = route.params;
+  const { addToCart } = useContext(CartContext);
 
   return (
     <View style={styles.container}>
@@ -17,7 +19,10 @@ const DishDisplay = ({ route }) => {
         </View>
       </View>
       <View style={styles.flexSpacer} />
-      <TouchableOpacity style={styles.addToCartButton}>
+      <TouchableOpacity
+        style={styles.addToCartButton}
+        onPress={() => addToCart(dish)}
+      >
         <Text style={styles.addToCartButtonText}>Add to Cart</Text>
       </TouchableOpacity>
     </View>

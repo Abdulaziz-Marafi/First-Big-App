@@ -6,6 +6,7 @@ import MainNavigation from "./src/navigation/MainNavigation/MainNavigation";
 import UserContext from "./src/context/UserContext";
 import AuthNav from "./src/navigation/AuthNavigation/AuthNav";
 import { getToken } from "./src/api/storage";
+import { CartProvider } from "./src/context/CartContext";
 
 export default function App() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -35,9 +36,9 @@ export default function App() {
             <UserContext.Provider
               value={{ isAuthenticated, setIsAuthenticated }}
             >
-              {/* <MainNavigation /> */}
-              {isAuthenticated ? <MainNavigation /> : <AuthNav />}
-              {/* <AuthNav /> */}
+              <CartProvider>
+                {isAuthenticated ? <MainNavigation /> : <AuthNav />}
+              </CartProvider>
             </UserContext.Provider>
           </QueryClientProvider>
         </NavigationContainer>
